@@ -106,17 +106,17 @@
 
       if (category) {
         url.searchParams.set("category", category);
-      } 
-      // else {
-      //   url.searchParams.delete("category");
-      // }
+      } else {
+        // url.searchParams.delete("category");
+        url.searchParams.set("category", '');
+      }
 
       if (subCategory) {
         url.searchParams.set("subCategory", subCategory);
-      } 
-      // else {
-      //   url.searchParams.delete("subCategory");
-      // }
+      } else {
+        // url.searchParams.delete("subCategory");
+        url.searchParams.set("subCategory", '');
+      }
 
       window.history.pushState({}, "", url);
       updatePreview();
