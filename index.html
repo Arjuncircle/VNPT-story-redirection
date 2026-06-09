@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,6 +67,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h2>Story Redirection Test</h2>
@@ -77,11 +79,12 @@
     <input id="subcategory" type="text" placeholder="Enter subcategory" />
 
     <button onclick="saveUrl()">Save</button>
+    <button onclick="goToUserStory()">User Own Story</button>
 
-    <div class="url-preview">
+    <!-- <div class="url-preview">
       Current URL:
       <div id="urlPreview"></div>
-    </div>
+    </div> -->
   </div>
 
   <script>
@@ -95,26 +98,44 @@
       categoryInput.value = params.get("category") || "";
       subcategoryInput.value = params.get("subCategory") || "";
 
-      updatePreview();
+      // updatePreview();
     }
+
+    // function saveUrl() {
+    //   const category = categoryInput.value.trim();
+    //   const subCategory = subcategoryInput.value.trim();
+    //   const url = new URL(window.location.href);
+
+    //   url.searchParams.set("category", category || "");
+    //   url.searchParams.set("subCategory", subCategory || "");
+
+    //   window.history.pushState({}, "", url);
+    //   updatePreview();
+    // }
+
 
     function saveUrl() {
-      const category = categoryInput.value.trim();
-      const subCategory = subcategoryInput.value.trim();
-      const url = new URL(window.location.href);
-      
-      url.searchParams.set("category", category || "");
-      url.searchParams.set("subCategory", subCategory || "");
-      
-      window.history.pushState({}, "", url);
-      updatePreview();
+      goToUserStory();
     }
 
-    function updatePreview() {
-      urlPreview.textContent = window.location.href;
+    function goToUserStory() {
+      const category = categoryInput.value.trim();
+      const subCategory = subcategoryInput.value.trim();
+
+      const url =
+        window.location.origin +
+        "/VNPT-story-redirection/user-story/" +
+        "?category=" + encodeURIComponent(category || "") +
+        "&subCategory=" + encodeURIComponent(subCategory || "");
+
+      window.location.href = url;
     }
+    // function updatePreview() {
+    //   urlPreview.textContent = window.location.href;
+    // }
 
     loadValuesFromUrl();
   </script>
 </body>
+
 </html>
