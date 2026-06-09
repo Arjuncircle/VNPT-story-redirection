@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Category URL Updater</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 520px;
+      margin: 60px auto;
+      padding: 24px;
+      background: #f7f7f7;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 22px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #374151;
+    }
+
+    .url-preview {
+      margin-top: 18px;
+      padding: 12px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      word-break: break-all;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Story Redirection Test</h2>
+
+    <label for="category">Category</label>
+    <input id="category" type="text" placeholder="Enter category" />
+
+    <label for="subcategory">Subcategory</label>
+    <input id="subcategory" type="text" placeholder="Enter subcategory" />
+
+    <button onclick="saveUrl()">Save</button>
+
+    <div class="url-preview">
+      Current URL:
+      <div id="urlPreview"></div>
+    </div>
+  </div>
+
+  <script>
+    const categoryInput = document.getElementById("category");
+    const subcategoryInput = document.getElementById("subcategory");
+    const urlPreview = document.getElementById("urlPreview");
+
+    function loadValuesFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+
+      categoryInput.value = params.get("category") || "";
+      subcategoryInput.value = params.get("subCategory") || "";
+
+      updatePreview();
+    }
+
+    function saveUrl() {
+      const category = categoryInput.value.trim();
+      const subCategory = subcategoryInput.value.trim();
+
+      const url = new URL(window.location.href);
+
+      if (category) {
+        url.searchParams.set("category", category);
+      } else {
+        url.searchParams.delete("category");
+      }
+
+      if (subCategory) {
+        url.searchParams.set("subCategory", subCategory);
+      } else {
+        url.searchParams.delete("subCategory");
+      }
+
+      window.history.pushState({}, "", url);
+      updatePreview();
+    }
+
+    function updatePreview() {
+      urlPreview.textContent = window.location.href;
+    }
+
+    loadValuesFromUrl();
+  </script>
+</body>
+</html>
