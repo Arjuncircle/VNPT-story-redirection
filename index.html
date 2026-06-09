@@ -70,10 +70,10 @@
   <div class="card">
     <h2>Story Redirection Test</h2>
 
-    <label for="category">Category</label>
+    <label for="category">Story Name</label>
     <input id="category" type="text" placeholder="Enter category" />
 
-    <label for="subcategory">Subcategory</label>
+    <label for="subcategory">Story Category</label>
     <input id="subcategory" type="text" placeholder="Enter subcategory" />
 
     <button onclick="saveUrl()">Save</button>
@@ -101,23 +101,11 @@
     function saveUrl() {
       const category = categoryInput.value.trim();
       const subCategory = subcategoryInput.value.trim();
-
       const url = new URL(window.location.href);
-
-      if (category) {
-        url.searchParams.set("category", category);
-      } else {
-        // url.searchParams.delete("category");
-        url.searchParams.set("category", '');
-      }
-
-      if (subCategory) {
-        url.searchParams.set("subCategory", subCategory);
-      } else {
-        // url.searchParams.delete("subCategory");
-        url.searchParams.set("subCategory", '');
-      }
-
+      
+      url.searchParams.set("category", category || "");
+      url.searchParams.set("subCategory", subCategory || "");
+      
       window.history.pushState({}, "", url);
       updatePreview();
     }
